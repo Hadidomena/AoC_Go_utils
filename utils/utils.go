@@ -43,3 +43,12 @@ func LoadFile(input string) []string {
 	lines := strings.Split(content, "\r\n")
 	return lines
 }
+// ConvertToRuneBoard takes in an array of strings,
+// and converts it into separate characters to allow easier modifications
+func ConvertToRuneBoard(board []string) [][]rune {
+	runeBoard := make([][]rune, len(board))
+	for i, line := range board {
+		runeBoard[i] = []rune(line)
+	}
+	return runeBoard
+}
