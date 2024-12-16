@@ -102,3 +102,12 @@ func NewPriorityQueue[T any](less func(a, b T) bool) *PriorityQueue[T] {
 		less:  less,
 	}
 }
+
+// Takes in RuneBoard as an argument, and returns an slice of strings
+func ConvertRuneBoardToStrings(input [][]rune) []string {
+	result := make([]string, len(input))
+	for i, row := range input {
+		result[i] = string(row) // Convert each row of runes to a string
+	}
+	return result
+}
