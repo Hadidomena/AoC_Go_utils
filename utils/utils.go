@@ -52,3 +52,53 @@ func ConvertToRuneBoard(board []string) [][]rune {
 	}
 	return runeBoard
 }
+
+// PriorityQueue is a generic priority queue implementation based on the heap interface.
+// It allows storing and prioritizing elements based on a custom comparison function.
+type PriorityQueue[T any] struct {
+	items []T
+	less  func(a, b T) bool
+}
+
+// Len returns the number of items in the priority queue.
+// Implements the sort.Interface.
+func (pq *PriorityQueue[T]) Len() int {
+	return len(pq.items)
+}
+
+// Less determines the priority of items in the queue.
+// Implements the sort.Interface.
+func (pq *PriorityQueue[T]) Less(i, j int) bool {
+	return pq.less(pq.items[i], pq.items[j])
+}
+
+// Swap exchanges the positions of two items in the queue.
+// Implements the sort.Interface.
+func (pq *PriorityQueue[T]) Swap(i, j int) {
+	pq.items[i], pq.items[j] = pq.items[j], pq.items[i]
+}
+
+// Push adds a new item to the priority queue.
+// Implements the heap.Interface.
+func (pq *PriorityQueue[T]) Push(x any) {
+	pq.items = append(pq.items, x.(T))
+}
+
+// Pop removes and returns the last item from the priority queue.
+// Implements the heap.Interface.
+func (pq *PriorityQueue[T]) Pop() any {
+	n := len(pq.items)
+	item := pq.items[n-1]
+	pq.items = pq.items[:n-1]
+	return item
+}
+
+// NewPriorityQueue creates a new priority queue with a custom less function.
+// The less function defines the priority of elements (return true if a should be 
+// prioritized before b).
+func NewPriorityQueue[T any](less func(a, b T) bool) *PriorityQueue[T] {
+	return &PriorityQueue[T]{
+		items: []T{},
+		less:  less,
+	}
+}
